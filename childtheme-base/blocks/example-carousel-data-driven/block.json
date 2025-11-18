@@ -1,0 +1,100 @@
+{
+  "apiVersion": 3,
+  "name": "child/example-carousel",
+  "title": "Example Carousel",
+  "category": "widgets",
+  "description": "Example Bootstrap carousel scaffold for cards, posts, or image-only slides.",
+  "icon": "images-alt2",
+  "supports": {
+    "html": false,
+    "align": ["wide", "full"],
+    "spacing": { "margin": ["top", "bottom"], "padding": true }
+  },
+  "attributes": {
+    "title": { "type": "string", "default": "" },
+    "intro": { "type": "string", "default": "" },
+
+    "textPositionHeading": {
+      "type": "string",
+      "default": "center",
+      "enum": ["left", "center", "right"]
+    },
+    "textPositionText": {
+      "type": "string",
+      "default": "left",
+      "enum": ["left", "center", "right"]
+    },
+
+    "items": {
+      "type": "array",
+      "default": [],
+      "items": {
+        "type": "object",
+        "properties": {
+          "imageURL": { "type": "string" },
+          "imageAlt": { "type": "string", "default": "" },
+          "heading": { "type": "string", "default": "" },
+          "text": { "type": "string", "default": "" },
+          "buttonLabel": { "type": "string", "default": "" },
+          "buttonURL": { "type": "string", "default": "" },
+          "tag": { "type": "string", "default": "" },
+          "meta": { "type": "string", "default": "" },
+          "date": { "type": "string", "default": "" },
+          "imageOnly": { "type": "boolean", "default": false }
+        }
+      }
+    },
+
+    "cols": {
+      "type": "object",
+      "default": { "xs": 1, "sm": 2, "md": 3, "lg": 4, "xl": 5 }
+    },
+
+    "cardLinkBehavior": {
+      "type": "string",
+      "default": "stretched",
+      "enum": ["stretched", "button-only", "none"]
+    },
+
+    "backgroundType": {
+      "type": "string",
+      "default": "none",
+      "enum": ["none", "color", "gradient"]
+    },
+    "backgroundValue": { "type": "string", "default": "" },
+
+    "autoplay": { "type": "boolean", "default": true },
+    "interval": { "type": "number", "default": 5000 },
+    "pauseOnHover": { "type": "boolean", "default": true },
+    "wrap": { "type": "boolean", "default": true },
+    "showControls": { "type": "boolean", "default": true },
+    "showIndicators": { "type": "boolean", "default": true },
+
+    "ariaLabel": { "type": "string", "default": "Example Carousel" },
+    "instanceId": { "type": "string", "default": "" },
+
+    "dataIndex": { "type": "number", "default": 0 },
+    "dataKey": { "type": "string", "default": "exampleCarousels" },
+    "source": {
+      "type": "object",
+      "default": {
+        "postType": ["post"],
+        "taxonomy": "category",
+        "terms": [],
+        "tags": [],
+        "perPage": 10,
+        "orderby": "date",
+        "order": "DESC",
+        "offset": 0,
+        "includeChildren": true,
+        "thumbSize": "large",
+
+        "search": "",
+        "searchFromUrl": false
+      }
+    }
+  },
+
+  "render": "file:./render.php",
+  "style": "file:./style.css"
+}

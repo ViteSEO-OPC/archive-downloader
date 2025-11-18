@@ -1,0 +1,18 @@
+{
+  "apiVersion": 3,
+  "name": "viteseo-childtheme-ttf-katvrglobal/example-block",
+  "title": "Example Block",
+  "category": "widgets",
+  "description": "A customizable example block.",
+  "keywords": ["example", "block", "custom"],
+  "supports": {
+    "html": false,
+    "align": true,
+    "spacing": { "margin": true, "padding": true }
+  },
+  "attributes": {},
+  "style": "file:./style.css",
+  "script": "file:./frontend.js",
+  "editorStyle": "file:./editor.css",
+  "editorScript": "file:./block.js"
+}

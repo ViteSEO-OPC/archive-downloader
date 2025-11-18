@@ -1,0 +1,451 @@
+/* =========================
+   Example carousel block
+========================= */
+:root {
+  --slider-accent: #ff5061;
+}
+.example-carousel-block {
+  --cr-title-size: var(--wp--preset--font-size--h-2);
+  max-width: 100%;
+  padding-left: var(--page-gutter-left, 1rem);
+  padding-right: var(--page-gutter-right, 1.5rem);
+  padding-top: 3rem;
+  padding-bottom: 3rem;
+  position: relative;
+}
+.example-carousel-block.has-bg {
+  padding-top: 2rem;
+  padding-bottom: 2.25rem;
+}
+
+.example-carousel-head {
+  text-align: center;
+  margin-bottom: 0.75rem;
+}
+.example-carousel-title {
+  font-weight: 700;
+  font-size: var(--wp--preset--font-size--h-2);
+  margin: 0 0 0.35rem;
+  white-space: pre-line;
+}
+.example-carousel-intro {
+  margin: 0 0 1rem;
+  font-size: var(--wp--preset--font-size--body);
+}
+
+/* Card text sizes inherit from presets */
+.card-title {
+  font-size: var(--wp--preset--font-size--h-3);
+  line-height: 1.4;
+}
+.card-text {
+  font-size: var(--wp--preset--font-size--body);
+  line-height: 1.6;
+}
+
+/* Meta (intentionally smaller than body) */
+.card-meta {
+  color: #666;
+  font-size: clamp(0.875rem, 0.82rem + 0.3vw, 1rem);
+}
+.card-meta .meta-line {
+  line-height: 1.25rem;
+}
+
+/* If markup still uses .h6 / .small, neutralize inside this component */
+.example-carousel-block .h6 {
+  font-size: inherit;
+  line-height: inherit;
+}
+.example-carousel-block .small {
+  font-size: inherit;
+}
+
+/* =========================
+  Cards
+========================= */
+.example-carousel-card {
+  border: 0;
+  border-radius: 0.75rem;
+  overflow: hidden;
+  background: #fff;
+}
+.example-carousel-card .card-img-top {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.example-carousel-card .badge {
+  font-weight: 600;
+  border: 1px solid #eee;
+}
+.example-carousel-card .btn.btn-danger.btn-sm {
+  border-radius: 7px;
+  padding-inline: 1rem;
+  font-weight: 700;
+}
+
+/* Meta block */
+.example-carousel-card .card-meta .meta-line {
+  line-height: 1.25rem;
+}
+
+/* Image-only tiles (gallery style) */
+.example-carousel-card.image-only {
+  border: 0;
+  background: transparent;
+  box-shadow: none;
+}
+.example-carousel-card.image-only .card-media {
+  position: relative; /* needed for overlay layers */
+  border-radius: 0.75rem;
+  overflow: hidden;
+}
+
+/* Slightly darken the image for contrast with white text */
+.example-carousel-card.image-only .card-media img {
+  filter: brightness(0.88);
+  transform: translateZ(0);
+}
+
+.example-carousel-card.has-body {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+.example-carousel-card.has-body .card-body {
+  display: flex;
+  flex-direction: column;
+  flex: 1 1 auto;
+}
+.example-carousel-card.has-body .card-media {
+  flex: 0 0 auto;
+}
+.example-carousel-card.has-body .card-foot { margin-top:auto; }
+
+.example-carousel-card .card-meta { margin: 0; }
+
+.example-carousel-card .card-title {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;      
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+.example-carousel-card .card-text {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;      
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+/* place after the original rules */
+.example-carousel-card .card-title,
+.example-carousel-card .card-text {
+  display: block;             
+  -webkit-line-clamp: unset;  
+  -webkit-box-orient: initial;
+  overflow: visible;
+  white-space: normal;
+}
+
+.slider-prev, .slider-next{
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 44px; height: 44px;
+  border-radius: 999px;
+  background: #fff;
+  color: var(--slider-accent);
+  border: 1px solid #e9ecef;
+  box-shadow: 0 6px 16px rgba(0,0,0,.12);
+  display:flex; align-items:center; justify-content:center;
+  line-height:1;
+}
+
+.example-carousel-card.has-body .btn,
+.tile-actions .btn {
+  width: 100%;
+  border-radius: 0.5rem;
+  margin-top: auto;
+  font-size: var(--wp--preset--font-size--body); /* Use body preset */
+  font-weight: 600;
+  text-align: center; /* ensure text is centered */
+  line-height: 1.4;
+  margin-top: 10px !important;
+}
+/* Make CTA buttons span full card width */
+.example-carousel-card.has-body .btn {
+  width: 100%;
+  border-radius: 0.5rem;
+  margin-top: auto;
+}
+.tile-actions .btn {
+  width: 100%;
+  border-radius: 0.5rem;
+}
+.example-carousel-card .btn {
+  position: relative;
+  z-index: 2;
+}
+.example-carousel-card .btn:hover {
+  background-color: #fff;
+  color: red;
+  border: 1px solid red;
+}
+.example-carousel-grid {
+  padding-bottom: 0;
+}
+.example-carousel-grid > .row {
+  justify-content: center;
+}
+
+/* Caption under image tiles */
+.tile-caption {
+  text-align: left;
+} /* change to center if preferred */
+
+/* slight gap between image and caption */
+.carousel-inner .row > .col {
+  margin-bottom: 0.25rem;
+}
+.carousel-inner .row.justify-content-center {
+  justify-content: center;
+}
+
+/* =========================
+  Carousel chrome (controls + indicators)
+========================= */
+.example-carousel-block,
+.example-carousel-stage {
+  overflow: visible; /* let arrows & dots render outside */
+  position: relative; /* anchor absolutely-positioned children */
+}
+.example-carousel-stage {
+  padding-bottom: 2rem;
+}
+
+.example-carousel-stage .carousel-control-prev,
+.example-carousel-stage .carousel-control-next{
+  width: auto;
+  top: 50%;
+  transform: translateY(-50%);
+  opacity: 1;
+  z-index: 5;
+  filter: drop-shadow(0 2px 6px rgba(0,0,0,.25));
+}
+.example-carousel-stage .carousel-control-prev {
+  left: calc(-0.4 * clamp(28px, 4vw, 88px)) !important;
+}
+.example-carousel-stage .carousel-control-next {
+  right: calc(-0.4 * clamp(28px, 4vw, 88px)) !important;
+}
+.example-carousel-stage .carousel-control-prev .slider-prev:hover {
+  color: white !important;
+  background-color: red !important;
+}
+.example-carousel-stage .carousel-control-next .slider-next:hover {
+  color: white !important;
+  background-color: red !important;
+}
+
+.example-carousel-stage .carousel-control-prev-icon,
+.example-carousel-stage .carousel-control-next-icon {
+  width: 44px;
+  height: 44px;
+  background-size: 60% 60%;
+  background-color: #000;
+  border-radius: 999px;
+  box-shadow: 0 6px 14px rgba(0, 0, 0, 0.25);
+}
+.example-carousel-stage .carousel-control-prev:hover .carousel-control-prev-icon,
+.example-carousel-stage .carousel-control-next:hover .carousel-control-next-icon,
+.example-carousel-stage .carousel-control-prev:focus .carousel-control-prev-icon,
+.example-carousel-stage .carousel-control-next:focus .carousel-control-next-icon {
+  background-color: #111;
+}
+
+/* Indicators (dots) */
+.example-carousel-stage .carousel-indicators {
+  bottom: -3rem;
+  z-index: 4;
+}
+.example-carousel-stage .carousel-indicators [data-bs-target] {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background-color: #333;
+  opacity: 0.35;
+}
+.example-carousel-stage .carousel-indicators .active {
+  opacity: 1;
+}
+
+/* =========================
+   Small-screen tweaks
+========================= */
+@media (max-width: 1000px) {
+  /* Bring arrows closer to edges on tablets/smaller laptops */
+  .example-carousel-stage .carousel-control-prev { left: -38px; }
+  .example-carousel-stage .carousel-control-next { right: -38px; }
+}
+
+@media (min-width: 360px) {
+  .example-carousel-stage .carousel-control-prev { left: -18px; }
+  .example-carousel-stage .carousel-control-next { right: -18px; }
+}
+/* =========================
+   Centered overlay on image-only tiles
+   (scrim sits UNDER text; text stays bright)
+========================= */
+.example-carousel-card.image-only .card-media::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 1; /* scrim below text */
+  pointer-events: none;
+}
+
+.tile-overlay {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  text-align: center;
+  padding: 0.75rem 1rem;
+  color: #fff;
+  z-index: 2; /* text above scrim */
+  pointer-events: none;
+}
+
+/* Curved badge across the top */
+.tile-arc {
+  position: absolute;
+  bottom: 10;
+  left: 0;
+  right: 0;
+  height: 60%;
+  width: 100%;
+  pointer-events: none;
+}
+.tile-arc-text {
+  fill: #fff;
+  font-weight: 700;
+  text-transform: uppercase;
+  font-size: clamp(0.62rem, 0.5rem + 0.6vw, 0.9rem);
+  paint-order: stroke;
+  stroke: rgba(0, 0, 0, 0.35);
+  stroke-width: 0.75px;
+  filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.5));
+}
+
+/* Center main title */
+.tile-title {
+  font-size: clamp(1.125rem, 1rem + 1.2vw, 1.75rem);
+  font-weight: 800;
+  line-height: 1.1;
+  color: #fff;
+  letter-spacing: 0.03em; /* gentle tracking */
+  text-shadow: 0 3px 10px rgba(0, 0, 0, 0.7), 0 1px 2px rgba(0, 0, 0, 0.6);
+  -webkit-text-stroke: 0.35px rgba(0, 0, 0, 0.35);
+}
+
+/* Optional: subtle scale on hover/focus */
+@media (hover: hover) {
+  .example-carousel-card.image-only .card-media:hover .tile-title {
+    transform: translateY(-1px);
+    transition: transform 0.2s ease;
+  }
+}
+
+
+
+/* =========================
+   Mobile/tablet: swipe slider with peek + dots
+========================= */
+.is-mobile {
+  display: block;
+}
+.is-desktop {
+  display: none;
+}
+
+.peek-slider {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  scroll-snap-type: x mandatory;
+  padding: 0 0.75rem;
+  margin: 0 -0.75rem;
+  scrollbar-width: none;
+}
+.peek-slider::-webkit-scrollbar {
+  height: 0;
+  display: none;
+}
+.peek-track {
+  display: flex;
+  gap: 1rem;
+  align-items: stretch;
+}
+.peek-slide {
+  flex: 0 0 86%;
+  scroll-snap-align: center;
+  scroll-snap-stop: always;
+}
+.peek-slide .col {
+  flex: 0 0 auto;
+  width: 100%;
+}
+@media (min-width: 576px) {
+  .peek-slide {
+    flex-basis: 72%;
+  }
+}
+@media (min-width: 768px) {
+  .peek-slide {
+    flex-basis: 62%;
+  }
+}
+
+/* Dots for mobile/tablet */
+.peek-indicators {
+  display: flex;
+  justify-content: center;
+  gap: 0.5rem;
+  margin-top: 0.75rem;
+  position: sticky;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 5;
+  background: inherit;
+  padding: 0.5rem 0 0.25rem;
+}
+.peek-indicators .pi-dot,
+.peek-indicators .pi-dot:link,
+.peek-indicators .pi-dot:visited,
+.peek-indicators .pi-dot:hover,
+.peek-indicators .pi-dot:focus,
+.peek-indicators .pi-dot:active {
+  text-decoration: none !important;
+  border: 0 !important;
+  outline: none;
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: #333;
+  opacity: 0.35;
+  cursor: pointer;
+}
+.peek-indicators .pi-dot.is-active {
+  opacity: 1;
+}
+
+@media (min-width: 1199.98px) {
+  .is-mobile {
+    display: none;
+  }
+  .is-desktop {
+    display: block;
+  }
+}

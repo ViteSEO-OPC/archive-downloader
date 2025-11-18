@@ -1,0 +1,54 @@
+{
+  "exampleCarousels": [
+    {
+      "title": "Example Carousel Title",
+      "intro": "Example introductory copy that highlights how to populate this component.",
+      "backgroundType": "none",
+      "backgroundValue": "",
+      "cols": { "sm": 1, "md": 2, "lg": 3, "xl": 4 },
+      "cardLinkBehavior": "none",
+      "autoplay": false,
+      "wrap": true,
+      "showControls": true,
+      "showIndicators": true,
+      "items": [
+        {
+          "imageURL": "/path/to/image-1.webp",
+          "imageAlt": "Placeholder image 1",
+          "heading": "Example Item One",
+          "text": "One-line example description for the first item."
+        },
+        {
+          "imageURL": "/path/to/image-2.webp",
+          "imageAlt": "Placeholder image 2",
+          "heading": "Example Item Two",
+          "text": "One-line example description for the second item."
+        },
+        {
+          "imageURL": "/path/to/image-3.webp",
+          "imageAlt": "Placeholder image 3",
+          "heading": "Example Item Three",
+          "text": "One-line example description for the third item."
+        },
+        {
+          "imageURL": "/path/to/image-4.webp",
+          "imageAlt": "Placeholder image 4",
+          "heading": "Example Item Four",
+          "text": "One-line example description for the fourth item."
+        },
+        {
+          "imageURL": "/path/to/image-5.webp",
+          "imageAlt": "Placeholder image 5",
+          "heading": "Example Item Five",
+          "text": "One-line example description for the fifth item."
+        },
+        {
+          "imageURL": "/path/to/image-6.webp",
+          "imageAlt": "Placeholder image 6",
+          "heading": "Example Item Six",
+          "text": "One-line example description for the sixth item."
+        }
+      ]
+    }
+  ]
+}
