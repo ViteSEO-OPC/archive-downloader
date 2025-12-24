@@ -1,28 +1,32 @@
-# Archive Downloader
+# Archive Downloader (Simple Guide)
 
-Archive one or more web pages into a WordPress-like folder structure with all CSS/JS inlined and images/fonts saved locally. The core tool is `childtheme-base/download-pages.py`. This repo also contains a WordPress child-theme scaffold (`childtheme-base/`), which is compatible with the output structure.
+This tool saves web pages so you can use them later, or bring them into WordPress. It grabs the page, pulls down images and fonts, and puts everything into a tidy folder.
 
-## What the tool does
+You run it from your computer and it creates a new folder with your saved pages.
 
-- Fetches a page (or a list of pages) over HTTP.
-- Inlines external CSS and JS into the HTML.
-- Downloads images referenced by `<img>` and `<source>` tags (including `srcset`, `data-src`, `data-original`).
-- Downloads fonts referenced in `@font-face` and embeds them as `data:` URLs.
-- Writes output into a WordPress-like structure:
-  - `templates/page-{slug}.html` for multi-page runs
-  - `page-{slug}.html` for single-page runs
-  - `wp-content/uploads/YYYY/MM/` for images
-  - `wp-content/uploads/fonts/` for fonts
-- Produces a `manifest.jsonl` describing everything it saved.
+---
 
-## Requirements
+## What it does (in plain language)
 
-- Python 3.8+ (tested by inspection; no Python 3.10+ specific features are used)
-- Python packages:
-  - `requests`
-  - `beautifulsoup4`
+- Saves a web page to a file.
+- Copies images used on the page.
+- Copies fonts used on the page.
+- Puts everything into a WordPress‑style folder layout.
+- Keeps a log file so you can see what it saved.
 
-Install deps (virtualenv recommended):
+---
+
+## Before you start (one-time setup)
+
+You need Python and two small helper packages.
+
+### 1) Install Python
+
+If you already have Python, you can skip this. If not, install Python 3 from the official site or your system package manager.
+
+### 2) Install the helper packages
+
+Open a terminal and run:
 
 ```bash
 python -m venv .venv
@@ -30,19 +34,34 @@ source .venv/bin/activate
 pip install requests beautifulsoup4
 ```
 
-## Usage
+---
 
-### Single page
+## Example 1 — Save a single page
+
+Command:
 
 ```bash
 python childtheme-base/download-pages.py \
   --url "https://example.com/page" \
-  --output output-archive
+  --output my-archive
 ```
 
-### Multiple pages (URL list)
+What you get:
 
-Create a text file with one URL per line (blank lines and `#` comments are ignored), e.g. `urls.txt`:
+```
+my-archive/
+  page-example.html
+  wp-content/
+  manifest.jsonl
+```
+
+---
+
+## Example 2 — Save multiple pages
+
+### Step A: Make a list of URLs
+
+Create a file named `urls.txt` like this:
 
 ```
 https://example.com/
@@ -50,89 +69,78 @@ https://example.com/about
 https://example.com/contact
 ```
 
-Run:
+### Step B: Run the tool
 
 ```bash
 python childtheme-base/download-pages.py \
   --list urls.txt \
-  --output output-archive \
+  --output my-archive \
   --workers 8 \
   --verbose
 ```
 
-### Arguments
-
-- `--url` (required unless `--list` is used): single page URL.
-- `--list` (required unless `--url` is used): path to a text file containing URLs.
-- `-o, --output` (required): output root folder.
-- `--workers`: number of parallel workers for pages (default: 10).
-- `--manifest`: custom path for JSONL manifest (default: `<output>/manifest.jsonl`).
-- `-v, --verbose`: log each saved file and skip.
-
-Run `python childtheme-base/download-pages.py --help` for the full CLI description.
-
-## Output layout
-
-For `--url`:
+What you get:
 
 ```
-output-archive/
-  page-{slug}.html
-  wp-content/
-    uploads/
-      YYYY/MM/
-        image-files...
-      fonts/
-        font-files...
-  manifest.jsonl
-```
-
-For `--list`:
-
-```
-output-archive/
+my-archive/
   templates/
-    page-{slug}.html
+    page-example.html
+    page-about.html
+    page-contact.html
   wp-content/
-    uploads/
-      YYYY/MM/
-        image-files...
-      fonts/
-        font-files...
   manifest.jsonl
 ```
 
-## Viewing output locally
+---
 
-Image URLs are written as absolute paths like `/wp-content/uploads/...`. To preview locally, serve the output root with a local web server so those paths resolve:
+## How to open the saved pages
+
+The saved pages expect images to be at `/wp-content/uploads/...`, so you should open them through a simple local web server.
+
+### Example (recommended)
 
 ```bash
-cd output-archive
+cd my-archive
 python -m http.server 8000
 ```
 
-Then open `http://localhost:8000/page-{slug}.html` (single) or `http://localhost:8000/templates/page-{slug}.html` (list).
+Then open:
 
-## Using output with WordPress
+- `http://localhost:8000/page-example.html` (single page)
+- `http://localhost:8000/templates/page-about.html` (multi page)
 
-The output structure is compatible with WordPress conventions:
+---
 
-- Copy `templates/page-{slug}.html` into your theme’s `templates/`.
-- Copy `wp-content/uploads/...` into your WordPress installation’s `wp-content/uploads/`.
+## Use with WordPress (simple copy steps)
 
-Because the HTML references `/wp-content/uploads/...` as absolute paths, the files must exist under the WordPress site root.
+If you want to use the saved pages inside WordPress:
 
-## Manifest format (JSON Lines)
+1) Copy your saved page file(s) into your theme’s `templates/` folder  
+   Example: `templates/page-about.html`
 
-Each line is a JSON object describing a saved artifact. Common `kind` values:
+2) Copy the images and fonts into your WordPress uploads folder  
+   Example: `wp-content/uploads/2025/12/...`
 
-- `page`: saved HTML page.
-- `image`: downloaded image (from HTTP or data URI).
-- `font`: downloaded font (also embedded as `data:` URL).
-- `css-inline-external`: external stylesheet inlined into `<style>`.
-- `css-inline`: existing `<style>` rewritten (fonts embedded).
-- `js-inline`: external JS inlined into `<script>`.
-- `image-reuse`: image reused based on filename across pages.
+This works because the saved pages point to `/wp-content/uploads/...` just like WordPress does.
+
+---
+
+## What the tool names files
+
+The tool creates a **slug** from the page URL (basically a short name).
+
+Examples:
+
+- `https://example.com/about-us` → `page-about-us.html`
+- `https://example.com/` → `page-example.html`
+
+If two pages create the same slug, the last one will overwrite the first.
+
+---
+
+## What the log file is
+
+The file `manifest.jsonl` is a log of everything saved.
 
 Example line:
 
@@ -140,26 +148,28 @@ Example line:
 {"kind":"image","source_type":"http","source":"https://example.com/logo.png","saved_url":"/wp-content/uploads/2025/12/logo.png","saved_path":"wp-content/uploads/2025/12/logo.png","bytes":12345,"sha1":"...","filename":"logo.png"}
 ```
 
-## Important behavior and limitations (audit notes)
+You usually don’t need this file, but it’s helpful for audits or troubleshooting.
 
-- Only HTML is parsed. There is no JavaScript execution, so client-rendered content may be missing.
-- CSS is inlined, but **only font URLs inside `@font-face` are downloaded and rewritten**. Other CSS `url(...)` assets (background images, etc.) are not fetched.
-- Only `<img>` and `<source>` tags are scanned for images. `<video>`, `<audio>`, `<picture>` without `srcset`, and CSS background images are not downloaded.
-- Cross-page image reuse is keyed by filename, not content hash. If two different files share a filename, the first one wins.
-- If two URLs produce the same slug, the later page can overwrite the earlier `page-{slug}.html`.
-- Wayback Machine URLs (`web.archive.org`) are rewritten to site-root paths for `a`, `area`, `link` (non-stylesheet), `form`, and `iframe` tags.
-- Network failures skip individual assets but the page still saves.
+---
 
-## Repository layout
+## Things to know (limitations in plain language)
 
-- `childtheme-base/download-pages.py`: the archiving tool.
-- `childtheme-base/`: WordPress child theme base (optional, but pairs well with the tool’s output).
-- `childtheme-base/README.md`: WordPress theme metadata.
+- It only saves **what’s in the HTML**. If a page is built by JavaScript after it loads, that extra content may be missing.
+- It saves images in `<img>` and `<source>` tags. Images used in CSS backgrounds are not downloaded.
+- It only pulls font files used in `@font-face`.
+- If an image fails to download, the page still saves (but that image may be missing).
 
-## Troubleshooting
+---
 
-- **Missing images**: confirm they are in `<img>`/`<source>` tags and not loaded via CSS or JS.
-- **Fonts not showing**: verify the CSS uses `@font-face` and the generated HTML includes embedded `data:` URLs.
-- **Broken image paths locally**: serve the output root with a local web server (see above).
-- **Slugs collide**: rename URLs or edit the output filenames manually.
+## Troubleshooting (simple fixes)
 
+- **Images look broken**: open the page through the local web server (see “How to open the saved pages”).
+- **Page looks different**: the site may load content with JavaScript after the page loads.
+- **Two pages became one**: their filenames matched; edit one slug or rename the file.
+
+---
+
+## Where the tool lives in this repo
+
+- `childtheme-base/download-pages.py` → the actual archiving tool
+- `childtheme-base/` → optional WordPress child‑theme starter (not required)
