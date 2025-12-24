@@ -180,4 +180,4 @@ You usually don’t need this file, but it’s helpful for audits or troubleshoo
 ## Where the tool lives in this repo
 
 - `childtheme-base/download-pages.py` → the actual archiving tool
-- `childtheme-base/` → optional WordPress child‑theme starter (not required)
+- `childtheme-base/` → a starter WordPress child theme that shows how the downloaded pages can be used as a child theme. Use it as a starting point and adapt it to your site’s needs.
