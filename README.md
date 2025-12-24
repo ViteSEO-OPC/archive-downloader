@@ -123,6 +123,8 @@ If you want to use the saved pages inside WordPress:
 
 This works because the saved pages point to `/wp-content/uploads/...` just like WordPress does.
 
+Note: the tool does not move or rearrange files for you. You still need to manually place the saved files into the correct WordPress folders (theme `templates/` and `wp-content/uploads/`).
+
 ---
 
 ## What the tool names files
