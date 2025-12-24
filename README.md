@@ -123,7 +123,13 @@ If you want to use the saved pages inside WordPress:
 
 This works because the saved pages point to `/wp-content/uploads/...` just like WordPress does.
 
-Note: the tool does not move or rearrange files for you. You still need to manually place the saved files into the correct WordPress folders (theme `templates/` and `wp-content/uploads/`).
+Important: the tool does not move or rearrange files for you. After it finishes, you must manually place the saved files into WordPress yourself. For example:
+
+- The HTML page files (like `page-about.html`) must be copied into your active theme’s `templates/` folder.
+- The images created under `wp-content/uploads/YYYY/MM/` must be uploaded or copied into your WordPress site’s real `wp-content/uploads/YYYY/MM/` folder so the image URLs work.
+- The fonts created under `wp-content/uploads/fonts/` must be copied into your WordPress site’s `wp-content/uploads/fonts/` folder.
+
+If those folders don’t exist in WordPress yet, create them first, then copy the files in.
 
 ---
 
